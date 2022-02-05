@@ -1,13 +1,19 @@
 http:
   port: 8081
 
+eb.addresses:
+  image.imgur: eb.image.imgur
+  image.cloudinary: eb.image.cloudinary
+
 image-service:
   active: imgur
   imgur:
+    name: imgur
     api-link: ""
     client-id: ""
     access-token: ""
   cloudinary:
+    name: cloudinary
     clound-name: ""
     api-key: ""
     api-secret: ""
