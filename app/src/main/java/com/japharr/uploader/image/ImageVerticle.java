@@ -2,10 +2,7 @@ package com.japharr.uploader.image;
 
 import com.japharr.uploader.image.cloudinary.CloudinaryVerticle;
 import com.japharr.uploader.image.imgur.ImgurVerticle;
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.CompositeFuture;
-import io.vertx.core.Future;
-import io.vertx.core.Promise;
+import io.vertx.core.*;
 
 public class ImageVerticle extends AbstractVerticle {
   @Override
@@ -21,8 +18,10 @@ public class ImageVerticle extends AbstractVerticle {
   }
 
   private Future<Void> deployVerticle() {
-    Future<String> imgurVerticle = vertx.deployVerticle(new ImgurVerticle());
-    Future<String> cloudinaryVerticle = vertx.deployVerticle(new CloudinaryVerticle());
+    DeploymentOptions deploymentOptions = new DeploymentOptions().setConfig(config());
+
+    Future<String> imgurVerticle = vertx.deployVerticle(new ImgurVerticle(), deploymentOptions);
+    Future<String> cloudinaryVerticle = vertx.deployVerticle(new CloudinaryVerticle(), deploymentOptions);
 
     return CompositeFuture.all(imgurVerticle, cloudinaryVerticle).mapEmpty();
   }
