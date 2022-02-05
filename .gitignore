@@ -211,4 +211,7 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+### Vetx upload directory ###
+file-uploads/
+
 # End of https://www.toptal.com/developers/gitignore/api/vertx,java,gradle,intellij,visualstudiocode,macos

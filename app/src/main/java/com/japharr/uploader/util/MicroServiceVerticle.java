@@ -2,9 +2,11 @@ package com.japharr.uploader.util;
 
 import io.vertx.core.*;
 import io.vertx.core.impl.ConcurrentHashSet;
+import io.vertx.core.json.JsonObject;
 import io.vertx.servicediscovery.Record;
 import io.vertx.servicediscovery.ServiceDiscovery;
 import io.vertx.servicediscovery.ServiceDiscoveryOptions;
+import io.vertx.servicediscovery.ServiceReference;
 import io.vertx.servicediscovery.types.EventBusService;
 
 import java.util.ArrayList;
@@ -39,6 +41,21 @@ public class MicroServiceVerticle extends AbstractVerticle {
         registeredRecords.add(record);
       }
       completionHandler.handle(ar.map((Void)null));
+    });
+  }
+
+  protected <T> void retrieveEventBusService(String serviceName, Class<T> serviceClass, Handler<AsyncResult<T>> resultHandler) {
+    discovery.getRecord(new JsonObject().put("name", serviceName), ar -> {
+      if (ar.succeeded() && ar.result() != null) {
+
+        // Retrieve the service reference
+        ServiceReference reference = discovery.getReference(ar.result());
+
+        // Retrieve the service object
+        T service = reference.getAs(serviceClass);
+
+        resultHandler.handle(Future.succeededFuture(service));
+      }
     });
   }
 
