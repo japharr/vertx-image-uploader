@@ -1,0 +1,13 @@
+http:
+  port: 8081
+
+image-service:
+  active: imgur
+  imgur:
+    api-link: ""
+    client-id: ""
+    access-token: ""
+  cloudinary:
+    clound-name: ""
+    api-key: ""
+    api-secret: ""
