@@ -37,7 +37,7 @@ public class WebVerticle extends AbstractVerticle {
   }
 
   private void getService(Handler<AsyncResult<ImageService>> resultHandler) {
-    discovery.getRecord(new JsonObject().put("name", "imgur"), ar -> {
+    discovery.getRecord(new JsonObject().put("name", "cloudinary"), ar -> {
       if (ar.succeeded() && ar.result() != null) {
 
         // Retrieve the service reference
