@@ -1,6 +1,7 @@
 package com.japharr.uploader.api;
 
 import com.japharr.uploader.image.ImageService;
+import com.japharr.uploader.util.MicroServiceVerticle;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
 import io.vertx.servicediscovery.ServiceDiscovery;
@@ -8,13 +9,12 @@ import io.vertx.servicediscovery.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WebVerticle extends AbstractVerticle {
+public class WebVerticle extends MicroServiceVerticle {
   private static final Logger LOGGER = LoggerFactory.getLogger(WebVerticle.class);
-
-  private ServiceDiscovery discovery;
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
+    super.start(startPromise);
     LOGGER.info("deploying webVerticle");
     discovery = ServiceDiscovery.create(vertx);
 
