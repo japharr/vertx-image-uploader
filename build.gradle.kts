@@ -30,8 +30,8 @@ subprojects {
     apply(plugin = "com.adarshr.test-logger")
 
     tasks.withType<JavaCompile> {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "16"
+        targetCompatibility = "16"
     }
 
     testlogger {

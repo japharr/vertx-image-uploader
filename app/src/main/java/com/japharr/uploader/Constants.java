@@ -1,5 +1,7 @@
 package com.japharr.uploader;
 
+import java.util.regex.Pattern;
+
 public interface Constants {
   String HTTP_KEY = "http";
   String HTTP_PORT_KEY = "port";
@@ -22,4 +24,8 @@ public interface Constants {
   String IMAGE_SERVICE_API_SECRET_KEY = "api-secret";
 
   long UPLOAD_LIMIT = 5*1024*1024;
+
+  String ENV_PATTERN = "\\${(.*?)}";
+
+  Pattern VALIDATE_ENV = Pattern.compile(ENV_PATTERN);
 }

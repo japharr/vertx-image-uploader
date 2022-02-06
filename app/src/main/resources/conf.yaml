@@ -7,6 +7,10 @@ eb.addresses:
 
 image-service:
   active: imgur
+  test:
+    - ade
+    - john
+    - tayo
   imgur:
     name: imgur
     api-link: https://api.imgur.com/3/image

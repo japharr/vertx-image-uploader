@@ -29,6 +29,10 @@ dependencies {
 
     runtimeOnly("io.netty:netty-resolver-dns-native-macos:$nettyResolverVersion:osx-x86_64")
 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_9
+    targetCompatibility = JavaVersion.VERSION_1_9
+}
 
 application {
     mainClass.set("com.japharr.uploader.MainVerticle")
