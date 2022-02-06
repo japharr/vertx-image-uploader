@@ -19,7 +19,7 @@ public class UploadApi {
     return ctx -> {
       Optional<FileUpload> opt = ctx.fileUploads().stream().findFirst();
       if(!opt.isPresent() || !opt.get().contentType().contains("image")) {
-        ctx.fail(new BadRequestException("Please, upload an image"));
+        restResponse(ctx, 400, "Please, upload an image");
         return;
       }
 

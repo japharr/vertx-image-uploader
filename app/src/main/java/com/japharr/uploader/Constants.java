@@ -20,4 +20,6 @@ public interface Constants {
   String IMAGE_SERVICE_CLOUD_NAME_KEY = "cloud-name";
   String IMAGE_SERVICE_API_KEY_KEY = "api-key";
   String IMAGE_SERVICE_API_SECRET_KEY = "api-secret";
+
+  long UPLOAD_LIMIT = 5*1024*1024;
 }

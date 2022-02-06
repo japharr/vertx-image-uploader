@@ -1,21 +1,17 @@
 package com.japharr.uploader.api;
 
-import com.japharr.uploader.api.handler.FailureHandler;
 import com.japharr.uploader.api.handler.UploadApi;
 import com.japharr.uploader.image.ImageService;
 import com.japharr.uploader.util.MicroServiceVerticle;
-import io.vertx.core.*;
+import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
-import io.vertx.servicediscovery.ServiceDiscovery;
-import io.vertx.servicediscovery.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.japharr.uploader.Constants.HTTP_KEY;
-import static com.japharr.uploader.Constants.HTTP_PORT_KEY;
+import static com.japharr.uploader.Constants.*;
 import static com.japharr.uploader.api.Endpoints.UPLOAD;
 
 public class WebVerticle extends MicroServiceVerticle {
@@ -27,7 +23,10 @@ public class WebVerticle extends MicroServiceVerticle {
     LOGGER.info("deploying webVerticle");
     Promise<ImageService> imageServicePromise = Promise.promise();
 
-    retrieveEventBusService("cloudinary", ImageService.class, imageServicePromise);
+    String imageServiceActive = config().getJsonObject(IMAGE_SERVICE_KEY)
+        .getString(IMAGE_SERVICE_ACTIVE_KEY);
+
+    retrieveEventBusService(imageServiceActive, ImageService.class, imageServicePromise);
 
     imageServicePromise.future()
         .compose(this::startServer)
@@ -46,13 +45,11 @@ public class WebVerticle extends MicroServiceVerticle {
     int httpServerPort = config().getJsonObject(HTTP_KEY).getInteger(HTTP_PORT_KEY);
 
     HttpServer httpServer = vertx.createHttpServer();
-    BodyHandler bodyHandler = BodyHandler.create();
+    BodyHandler bodyHandler = BodyHandler.create().setBodyLimit(UPLOAD_LIMIT);
     Router router = Router.router(vertx);
 
     router.post(UPLOAD).handler(bodyHandler);
     router.post(UPLOAD).handler(UploadApi.imageUpload(imageService));
-
-    router.route().failureHandler(new FailureHandler());
 
     return httpServer
         .requestHandler(router)
