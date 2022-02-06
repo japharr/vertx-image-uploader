@@ -10,6 +10,7 @@ dependencies {
 
     implementation("io.vertx:vertx-web:$vertxVersion")
     implementation("io.vertx:vertx-config:$vertxVersion")
+    implementation("io.vertx:vertx-web-client:$vertxVersion")
     implementation("io.vertx:vertx-config-yaml:$vertxVersion")
     implementation("io.vertx:vertx-service-proxy:$vertxVersion")
     implementation("io.vertx:vertx-service-discovery:$vertxVersion")
