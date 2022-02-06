@@ -3,6 +3,8 @@ package com.japharr.uploader.image.imgur;
 import com.japharr.uploader.image.imgur.service.ImgurService;
 import com.japharr.uploader.util.BaseImageVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClient;
 
 import static com.japharr.uploader.Constants.*;
 
@@ -17,6 +19,8 @@ public class ImgurVerticle extends BaseImageVerticle {
     String imgurServiceName = config().getJsonObject(IMAGE_SERVICE_KEY)
             .getJsonObject(IMAGE_SERVICE_IMGUR_KEY).getString(IMAGE_SERVICE_NAME_KEY);
 
-    ImgurService.create(vertx, bindAndPublish(imgurEbAddress, imgurServiceName, startPromise, ImgurService.class));
+    JsonObject imgurConf = config().getJsonObject(IMAGE_SERVICE_KEY).getJsonObject(IMAGE_SERVICE_IMGUR_KEY);
+
+    ImgurService.create(WebClient.create(vertx), imgurConf, bindAndPublish(imgurEbAddress, imgurServiceName, startPromise, ImgurService.class));
   }
 }

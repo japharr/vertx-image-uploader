@@ -8,12 +8,14 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClient;
 
 @ProxyGen
 public interface ImgurService extends ImageService {
   @GenIgnore
-  static ImgurService create(Vertx vertx, Handler<AsyncResult<ImgurService>> resultHandler) {
-    return new ImgurServiceImpl(vertx, resultHandler);
+  static ImgurService create(WebClient webClient, JsonObject conf, Handler<AsyncResult<ImgurService>> resultHandler) {
+    return new ImgurServiceImpl(webClient, conf, resultHandler);
   }
 
   @GenIgnore

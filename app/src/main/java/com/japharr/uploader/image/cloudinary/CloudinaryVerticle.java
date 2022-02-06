@@ -3,6 +3,8 @@ package com.japharr.uploader.image.cloudinary;
 import com.japharr.uploader.image.cloudinary.service.CloudinaryService;
 import com.japharr.uploader.util.BaseImageVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClient;
 
 import static com.japharr.uploader.Constants.*;
 
@@ -17,6 +19,9 @@ public class CloudinaryVerticle extends BaseImageVerticle {
     String cloudinaryServiceName = config().getJsonObject(IMAGE_SERVICE_KEY)
         .getJsonObject(IMAGE_SERVICE_CLOUDINARY_KEY).getString(IMAGE_SERVICE_NAME_KEY);
 
-    CloudinaryService.create(vertx, bindAndPublish(cloudinaryEbAddress, cloudinaryServiceName, startPromise, CloudinaryService.class));
+    JsonObject cloudinaryConf = config().getJsonObject(IMAGE_SERVICE_KEY)
+        .getJsonObject(IMAGE_SERVICE_CLOUDINARY_KEY);
+
+    CloudinaryService.create(WebClient.create(vertx), cloudinaryConf, bindAndPublish(cloudinaryEbAddress, cloudinaryServiceName, startPromise, CloudinaryService.class));
   }
 }

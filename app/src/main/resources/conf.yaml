@@ -9,9 +9,9 @@ image-service:
   active: imgur
   imgur:
     name: imgur
-    api-link: ""
-    client-id: ""
-    access-token: ""
+    api-link: https://api.imgur.com/3/image
+    client-id: ${CLIENT_ID}
+    access-token: ${ACCESS_TOKEN}
   cloudinary:
     name: cloudinary
     clound-name: ""

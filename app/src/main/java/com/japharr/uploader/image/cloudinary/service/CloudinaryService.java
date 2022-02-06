@@ -9,12 +9,14 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClient;
 
 @ProxyGen
 public interface CloudinaryService extends ImageService {
   @GenIgnore
-  static CloudinaryService create(Vertx vertx, Handler<AsyncResult<CloudinaryService>> resultHandler) {
-    return new CloudinaryServiceImpl(vertx, resultHandler);
+  static CloudinaryService create(WebClient webClient, JsonObject conf, Handler<AsyncResult<CloudinaryService>> resultHandler) {
+    return new CloudinaryServiceImpl(webClient, conf, resultHandler);
   }
 
   @GenIgnore
