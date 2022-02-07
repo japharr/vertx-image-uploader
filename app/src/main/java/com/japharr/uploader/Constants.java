@@ -22,7 +22,7 @@ public interface Constants {
   String IMAGE_SERVICE_ACCESS_TOKEN_KEY = "access-token";
   String IMAGE_SERVICE_CLOUD_NAME_KEY = "cloud-name";
   String IMAGE_SERVICE_API_KEY_KEY = "api-key";
-  String IMAGE_SERVICE_API_SECRET_KEY = "api-secret";
+  String IMAGE_SERVICE_UPLOAD_PRESET_KEY = "upload-preset";
 
   long UPLOAD_LIMIT = 5*1024*1024;
 

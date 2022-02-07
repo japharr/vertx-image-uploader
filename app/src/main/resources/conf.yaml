@@ -14,5 +14,6 @@ image-service:
     access-token: ${ACCESS_TOKEN}
   cloudinary:
     name: cloudinary
+    api-link: https://api.cloudinary.com/v1_1/demo/image/upload
     api-key: ${API_KEY}
     upload-preset: ${UPLOAD_PRESET}
