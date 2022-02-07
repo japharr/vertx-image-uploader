@@ -18,7 +18,7 @@ public class ImgurServiceImpl implements ImgurService {
 
   public ImgurServiceImpl(WebClient webClient, JsonObject conf, Handler<AsyncResult<ImgurService>> resultHandler) {
     this.webClient = webClient;
-    this.conf = new ImgurConfig(conf);
+    this.conf = ImgurConfig.of(conf);
 
     // TODO:: to check if the imgur service are available
     resultHandler.handle(Future.succeededFuture(this));
@@ -26,7 +26,7 @@ public class ImgurServiceImpl implements ImgurService {
 
   @Override
   public Future<String> upload(String imagePath) {
-    HttpRequest<Buffer> request = webClient.postAbs(conf.getApiLink());
+    HttpRequest<Buffer> request = webClient.postAbs(conf.apiLink());
 
     MultiMap form = MultiMap.caseInsensitiveMultiMap();
     try {
@@ -36,7 +36,7 @@ public class ImgurServiceImpl implements ImgurService {
     }
 
     return request
-        .putHeader("Authorization", conf.getAccessToken())
+        .putHeader("Authorization", conf.accessToken())
         .putHeader("Content-Type", "multipart/form-data")
         .sendForm(form, "UTF-8")
         .compose(ss -> Future.succeededFuture("upload to imgur"));
