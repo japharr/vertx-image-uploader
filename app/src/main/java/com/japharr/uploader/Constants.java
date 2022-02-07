@@ -1,5 +1,6 @@
 package com.japharr.uploader;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public interface Constants {
@@ -25,7 +26,15 @@ public interface Constants {
 
   long UPLOAD_LIMIT = 5*1024*1024;
 
-  String ENV_PATTERN = "\\${(.*?)}";
+  String ENV_PATTERN = "[^{}]+(?=})";
 
   Pattern VALIDATE_ENV = Pattern.compile(ENV_PATTERN);
+
+  static String resolveEnv(String key) {
+    Matcher matcher = VALIDATE_ENV.matcher(key);
+
+    if(!matcher.find()) return key;
+
+    return matcher.group(0);
+  }
 }

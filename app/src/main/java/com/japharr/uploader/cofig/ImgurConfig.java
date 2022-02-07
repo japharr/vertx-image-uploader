@@ -10,9 +10,13 @@ public class ImgurConfig {
   private final String accessToken;
 
   public ImgurConfig(JsonObject conf) {
-    apiLink = conf.getString(IMAGE_SERVICE_API_LINK_KEY);
-    clientId = conf.getString(IMAGE_SERVICE_CLIENT_ID_KEY);
-    accessToken = conf.getString(IMAGE_SERVICE_ACCESS_TOKEN_KEY);
+    JsonObject imgurConf = conf
+        .getJsonObject(IMAGE_SERVICE_KEY)
+        .getJsonObject(IMAGE_SERVICE_IMGUR_KEY);
+
+    apiLink = imgurConf.getString(IMAGE_SERVICE_API_LINK_KEY);
+    clientId = conf.getString(resolveEnv(imgurConf.getString(IMAGE_SERVICE_CLIENT_ID_KEY)));
+    accessToken = conf.getString(resolveEnv(imgurConf.getString(IMAGE_SERVICE_ACCESS_TOKEN_KEY)));
   }
 
   public String getApiLink() {

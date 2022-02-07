@@ -6,19 +6,10 @@ import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
 import io.vertx.core.*;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static com.japharr.uploader.Constants.VALIDATE_ENV;
 
 public class MainVerticle extends AbstractVerticle {
   private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
@@ -52,6 +43,8 @@ public class MainVerticle extends AbstractVerticle {
             .put("keys", new JsonArray()
                 .add("CLIENT_ID")
                 .add("ACCESS_TOKEN")
+                .add("API_KEY")
+                .add("UPLOAD_PRESET")
             )
         );
 

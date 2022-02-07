@@ -19,8 +19,6 @@ public class ImgurVerticle extends BaseImageVerticle {
     String imgurServiceName = config().getJsonObject(IMAGE_SERVICE_KEY)
             .getJsonObject(IMAGE_SERVICE_IMGUR_KEY).getString(IMAGE_SERVICE_NAME_KEY);
 
-    JsonObject imgurConf = config().getJsonObject(IMAGE_SERVICE_KEY).getJsonObject(IMAGE_SERVICE_IMGUR_KEY);
-
-    ImgurService.create(WebClient.create(vertx), imgurConf, bindAndPublish(imgurEbAddress, imgurServiceName, startPromise, ImgurService.class));
+    ImgurService.create(WebClient.create(vertx), config(), bindAndPublish(imgurEbAddress, imgurServiceName, startPromise, ImgurService.class));
   }
 }
