@@ -22,6 +22,6 @@ public class CloudinaryVerticle extends BaseImageVerticle {
     JsonObject cloudinaryConf = config().getJsonObject(IMAGE_SERVICE_KEY)
         .getJsonObject(IMAGE_SERVICE_CLOUDINARY_KEY);
 
-    CloudinaryService.create(WebClient.create(vertx), cloudinaryConf, bindAndPublish(cloudinaryEbAddress, cloudinaryServiceName, startPromise, CloudinaryService.class));
+    CloudinaryService.create(WebClient.create(vertx), config(), bindAndPublish(cloudinaryEbAddress, cloudinaryServiceName, startPromise, CloudinaryService.class));
   }
 }
