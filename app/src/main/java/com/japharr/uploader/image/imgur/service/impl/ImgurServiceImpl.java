@@ -7,10 +7,15 @@ import io.vertx.core.*;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.HttpRequest;
+import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
+import io.vertx.ext.web.codec.BodyCodec;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
+
+import static com.japharr.uploader.Constants.*;
 
 public class ImgurServiceImpl implements ImgurService {
   private final WebClient webClient;
@@ -36,9 +41,28 @@ public class ImgurServiceImpl implements ImgurService {
     }
 
     return request
+        .as(BodyCodec.jsonObject())
         .putHeader("Authorization", conf.accessToken())
         .putHeader("Content-Type", "multipart/form-data")
         .sendForm(form, "UTF-8")
-        .compose(ss -> Future.succeededFuture("upload to imgur"));
+        .compose(this::mapToString);
+  }
+
+  private Future<String> mapToString(HttpResponse<JsonObject> response) {
+    String failedMessage = MessageFormat.format(FAILED_TO_UPLOAD_IMAGE_MESSAGE, "imgur");
+    if(response.statusCode() != HTTP_OK) {
+      return Future.failedFuture(failedMessage);
+    }
+
+    JsonObject jsonObject = response.body();
+    int statusCode = jsonObject.getInteger(IMAGE_IMGUR_RESPONSE_STATUS);
+
+    if(statusCode == HTTP_OK) {
+      return Future.succeededFuture(response.body()
+          .getJsonObject(IMAGE_IMGUR_RESPONSE_DATA)
+          .getString(IMAGE_IMGUR_RESPONSE_DATA_LINK));
+    }
+
+    return Future.failedFuture(failedMessage);
   }
 }

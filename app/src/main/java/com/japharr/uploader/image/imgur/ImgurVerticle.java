@@ -3,7 +3,6 @@ package com.japharr.uploader.image.imgur;
 import com.japharr.uploader.image.imgur.service.ImgurService;
 import com.japharr.uploader.util.BaseImageVerticle;
 import io.vertx.core.Promise;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
 
 import static com.japharr.uploader.Constants.*;
