@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
+import static com.japharr.uploader.Constants.HTTP_BAD_REQUEST;
+import static com.japharr.uploader.Constants.HTTP_OK;
 import static com.japharr.uploader.util.RestApiUtil.restResponse;
 
 public class UploadApi {
@@ -18,8 +20,8 @@ public class UploadApi {
   public static Handler<RoutingContext> imageUpload(ImageService imageService) {
     return ctx -> {
       Optional<FileUpload> opt = ctx.fileUploads().stream().findFirst();
-      if(!opt.isPresent() || !opt.get().contentType().contains("image")) {
-        restResponse(ctx, 400, "Please, upload an image");
+      if(opt.isEmpty() || !opt.get().contentType().contains("image")) {
+        restResponse(ctx, HTTP_BAD_REQUEST, "Please, upload an image");
         return;
       }
 
@@ -27,9 +29,9 @@ public class UploadApi {
       imageService.upload(fileUpload.uploadedFileName())
           .onComplete(rs -> {
             if(rs.succeeded()) {
-              restResponse(ctx, 200, rs.result());
+              restResponse(ctx, HTTP_OK, rs.result());
             } else {
-              ctx.fail(rs.cause());
+              restResponse(ctx, HTTP_BAD_REQUEST, rs.cause().getMessage());
             }
           });
     };

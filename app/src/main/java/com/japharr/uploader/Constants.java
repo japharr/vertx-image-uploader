@@ -25,11 +25,15 @@ public interface Constants {
   String IMAGE_SERVICE_UPLOAD_PRESET_KEY = "upload-preset";
 
   int HTTP_OK = 200;
+  int HTTP_BAD_REQUEST = 400;
   long UPLOAD_LIMIT = 5*1024*1024;
 
   String IMAGE_IMGUR_RESPONSE_DATA = "data";
   String IMAGE_IMGUR_RESPONSE_STATUS = "status";
   String IMAGE_IMGUR_RESPONSE_DATA_LINK = "link";
+
+  String IMAGE_CLOUDINARY_RESPONSE_URL = "url";
+  String IMAGE_CLOUDINARY_RESPONSE_SECURE_URL = "secure_url";
 
   String FAILED_TO_UPLOAD_IMAGE_MESSAGE = "Unable to upload image to {}";
 
